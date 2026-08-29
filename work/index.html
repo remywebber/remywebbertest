@@ -22,7 +22,7 @@
     line-height:1.5;
   }
   a{color:inherit;text-decoration:none;}
-  ::selection{background:var(--ink);color:var(--paper);} 
+  ::selection{background:var(--ink);color:var(--paper);}
 
   header{
     display:flex;
@@ -37,7 +37,7 @@
   .id-block .role{margin-top:4px;font-size:0.7rem;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;text-align:center;}
   nav{display:flex;gap:36px;padding-top:8px;}
   nav a{font-size:0.82rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink);padding-bottom:4px;border-bottom:1px solid transparent;transition:border-color .15s ease;}
-  nav a:hover, nav a.active{border-color:var(--ink);} 
+  nav a:hover, nav a.active{border-color:var(--ink);}
 
   @media (orientation: portrait){
     header{
@@ -67,7 +67,7 @@
     background:#222;
   }
   .still .ph{width:100%;height:100%;display:block;transition:transform .6s ease;}
-  .still:hover .ph{transform:scale(1.02);} 
+  .still:hover .ph{transform:scale(1.02);}
   .still .caption{
     position:absolute;
     left:24px;bottom:20px;
@@ -77,12 +77,14 @@
   .still .caption .t{font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;}
   .still .caption .m{font-size:0.75rem;color:rgba(245,242,232,0.75);margin-top:4px;}
 
-  .ph1{background:linear-gradient(135deg,#1c1c1a,#4a463d 45%,#8f8168 100%);} 
-  .ph2{background:linear-gradient(160deg,#0e1418,#233138 50%,#4d6a72 100%);} 
-  .ph3{background:linear-gradient(140deg,#241512,#6b3b2c 45%,#c98a54 100%);} 
-  .ph4{background:linear-gradient(150deg,#101012,#39383f 40%,#7d7b86 100%);} 
-  .ph5{background:linear-gradient(130deg,#181410,#4f4232 45%,#a9915f 100%);} 
-  .ph6{background:linear-gradient(155deg,#0c1210,#243c34 45%,#5c8a72 100%);} 
+  .ph1{background:linear-gradient(135deg,#1c1c1a,#4a463d 45%,#8f8168 100%);}
+  .ph2{background:linear-gradient(160deg,#0e1418,#233138 50%,#4d6a72 100%);}
+  .ph3{background:linear-gradient(140deg,#241512,#6b3b2c 45%,#c98a54 100%);}
+  .ph4{background:linear-gradient(150deg,#101012,#39383f 40%,#7d7b86 100%);}
+  .ph5{background:linear-gradient(130deg,#181410,#4f4232 45%,#a9915f 100%);}
+  .ph6{background:linear-gradient(155deg,#0c1210,#243c34 45%,#5c8a72 100%);}
+  .ph7{background:linear-gradient(145deg,#14100c,#4a3226 45%,#9c6b45 100%);}
+  .ph8{background:linear-gradient(165deg,#0d1214,#2c3a3f 50%,#6a8992 100%);}
 
   footer{padding:28px 56px 40px;font-size:0.75rem;color:var(--muted);display:flex;justify-content:center;}
 
@@ -101,8 +103,8 @@
   .lightbox-caption p{font-size:0.82rem;color:rgba(245,242,232,0.65);margin-top:4px;}
   .lightbox-nav{display:flex;gap:14px;align-items:center;}
   .lightbox-nav .counter{font-size:0.75rem;color:rgba(245,242,232,0.6);margin-right:6px;}
-  .lightbox-nav button{background:none;border:1px solid rgba(245,242,232,0.35);color:#F5F2E8;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;transition:border-color .15s ease;}
-  .lightbox-nav button:hover{border-color:#F5F2E8;background:rgba(245,242,232,0.08);} 
+  .lightbox-nav button{background:none;border:1px solid rgba(245,242,232,0.35);color:#F5F2E8;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;transition:border-color .15s ease, background .15s ease;}
+  .lightbox-nav button:hover{border-color:#F5F2E8;background:rgba(245,242,232,0.08);}
   .lightbox-close{position:absolute;top:32px;right:40px;background:none;border:none;color:#F5F2E8;font-size:1.6rem;cursor:pointer;line-height:1;}
 
   @media(max-width:820px){
@@ -131,22 +133,28 @@
 <main>
   <div class="stills" id="stillsList">
     <button class="still" data-project="0"><div class="ph ph1"></div>
-      <div class="caption"><div class="t">Wolf &amp; Ember</div><div class="m">Dir. Marta Coen — Feature</div></div>
+      <div class="caption"><div class="t">Little Pumpkin</div><div class="m">Dir. Jessica Fisher — Short Film</div></div>
     </button>
     <button class="still" data-project="1"><div class="ph ph2"></div>
-      <div class="caption"><div class="t">Low Tide</div><div class="m">Dir. Sam Ashworth — Feature</div></div>
+      <div class="caption"><div class="t">BROOD</div><div class="m">Dir. Sasha Aubort — Fashion Film</div></div>
     </button>
     <button class="still" data-project="2"><div class="ph ph3"></div>
-      <div class="caption"><div class="t">Harbour Light</div><div class="m">Dir. Priya Nair — Feature</div></div>
+      <div class="caption"><div class="t">No Devil Lived On</div><div class="m">Dir. Shuban Krishnar — Short Film</div></div>
     </button>
     <button class="still" data-project="3"><div class="ph ph4"></div>
-      <div class="caption"><div class="t">Nightshift</div><div class="m">Dir. Elliot Frame — Series</div></div>
+      <div class="caption"><div class="t">Chasing Harvey</div><div class="m">Dir. Jessica Fisher — Short Film</div></div>
     </button>
     <button class="still" data-project="4"><div class="ph ph5"></div>
-      <div class="caption"><div class="t">Salt Circuit</div><div class="m">Dir. Marta Coen — Commercial</div></div>
+      <div class="caption"><div class="t">Housemate from Hell</div><div class="m">Dir. Jessica Fisher — Short Film</div></div>
     </button>
-    <button class="still" data-project="5"><div class="ph ph6"></div>
-      <div class="caption"><div class="t">The Long Field</div><div class="m">Dir. Devon Ariyo — Feature</div></div>
+    <button class="still" data-project="5"><div class="ph ph7"></div>
+      <div class="caption"><div class="t">Solitude</div><div class="m">Dir. Maia Jorgensen — Short Film</div></div>
+    </button>
+    <button class="still" data-project="6"><div class="ph ph6"></div>
+      <div class="caption"><div class="t">Mud Man</div><div class="m">Dir. Madi Lee-Hislop — Short Film</div></div>
+    </button>
+    <button class="still" data-project="7"><div class="ph ph8"></div>
+      <div class="caption"><div class="t">Dont Bite</div><div class="m">Dir. Seth Griffiths-Kemp — Visualiser</div></div>
     </button>
   </div>
 </main>
@@ -174,18 +182,22 @@
 <script>
   /* Each project has its own set of stills (a few frames from that shoot) */
   const projects = [
-    { title:"Wolf & Ember", meta:"Dir. Marta Coen — Feature",
-      stills:[{ph:"ph1",filter:"none"},{ph:"ph1",filter:"hue-rotate(20deg) brightness(1.08)"},{ph:"ph1",filter:"hue-rotate(-15deg) brightness(0.92)"},{ph:"ph1",filter:"hue-rotate(35deg) brightness(1.12)"}] },
-    { title:"Low Tide", meta:"Dir. Sam Ashworth — Feature",
+    { title:"Little Pumpkin", meta:"Dir. Jessica Fisher — Short Film",
+      stills:[{ph:"ph1",filter:"none"},{ph:"ph1",filter:"hue-rotate(20deg) brightness(1.08)"},{ph:"ph1",filter:"hue-rotate(-15deg) brightness(0.92)"},{ph:"ph1",filter:"hue-rotate(35deg) brightness(1.02)"}] },
+    { title:"BROOD", meta:"Dir. Sasha Aubort — Fashion Film",
       stills:[{ph:"ph2",filter:"none"},{ph:"ph2",filter:"hue-rotate(18deg) brightness(1.05)"},{ph:"ph2",filter:"hue-rotate(-20deg) brightness(0.95)"}] },
-    { title:"Harbour Light", meta:"Dir. Priya Nair — Feature",
-      stills:[{ph:"ph3",filter:"none"},{ph:"ph3",filter:"hue-rotate(14deg) brightness(1.06)"},{ph:"ph3",filter:"hue-rotate(-18deg) brightness(0.9)"},{ph:"ph3",filter:"hue-rotate(28deg) brightness(1.08)"}] },
-    { title:"Nightshift", meta:"Dir. Elliot Frame — Series",
+    { title:"No Devil Lived On", meta:"Dir. Shuban Krishnar — Short Film",
+      stills:[{ph:"ph3",filter:"none"},{ph:"ph3",filter:"hue-rotate(14deg) brightness(1.06)"},{ph:"ph3",filter:"hue-rotate(-18deg) brightness(0.9)"},{ph:"ph3",filter:"hue-rotate(28deg) brightness(1.0)"}] },
+    { title:"Chasing Harvey", meta:"Dir. Jessica Fisher — Short Film",
       stills:[{ph:"ph4",filter:"none"},{ph:"ph4",filter:"hue-rotate(22deg) brightness(1.04)"},{ph:"ph4",filter:"hue-rotate(-24deg) brightness(0.93)"}] },
-    { title:"Salt Circuit", meta:"Dir. Marta Coen — Commercial",
+    { title:"Housemate from Hell", meta:"Dir. Jessica Fisher — Short Film",
       stills:[{ph:"ph5",filter:"none"},{ph:"ph5",filter:"hue-rotate(16deg) brightness(1.07)"},{ph:"ph5",filter:"hue-rotate(-20deg) brightness(0.92)"}] },
-    { title:"The Long Field", meta:"Dir. Devon Ariyo — Feature",
-      stills:[{ph:"ph6",filter:"none"},{ph:"ph6",filter:"hue-rotate(12deg) brightness(1.05)"},{ph:"ph6",filter:"hue-rotate(-16deg) brightness(0.94)"},{ph:"ph6",filter:"hue-rotate(26deg) brightness(1.1)"}] }
+    { title:"Solitude", meta:"Dir. Maia Jorgensen — Short Film",
+      stills:[{ph:"ph7",filter:"none"},{ph:"ph7",filter:"hue-rotate(15deg) brightness(1.06)"},{ph:"ph7",filter:"hue-rotate(-18deg) brightness(0.9)"}] },
+    { title:"Mud Man", meta:"Dir. Madi Lee-Hislop — Short Film",
+      stills:[{ph:"ph6",filter:"none"},{ph:"ph6",filter:"hue-rotate(12deg) brightness(1.05)"},{ph:"ph6",filter:"hue-rotate(-16deg) brightness(0.94)"},{ph:"ph6",filter:"hue-rotate(26deg) brightness(1.0)"}] },
+    { title:"Dont Bite", meta:"Dir. Seth Griffiths-Kemp — Visualiser",
+      stills:[{ph:"ph8",filter:"none"},{ph:"ph8",filter:"hue-rotate(20deg) brightness(1.05)"},{ph:"ph8",filter:"hue-rotate(-22deg) brightness(0.93)"}] }
   ];
 
   const lightbox = document.getElementById('lightbox');
