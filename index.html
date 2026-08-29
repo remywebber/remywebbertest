@@ -99,11 +99,21 @@
     border-color:#FFFEFB;
     border-width:14px 18px 52px 18px;
     box-sizing:content-box;
-    background:
-      var(--hero-bg, linear-gradient(120deg, #3b3a35 0%, #6a6558 38%, #b3a487 68%, #ecd9a8 100%));
+    background:#1a1a18;
     position:relative;
-    transition:background 0.6s ease;
+    overflow:hidden;
   }
+  .hero-img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    opacity:0;
+    transition:opacity 1.1s ease;
+  }
+  .hero-img.is-visible{opacity:1;}
 
   /* Work section */
   #work{padding:96px 56px 40px;}
@@ -287,7 +297,10 @@
 </header>
 
 <div class="hero-wrap" id="heroWrap">
-  <div class="hero-frame" id="heroFrame"></div>
+  <div class="hero-frame" id="heroFrame">
+    <img class="hero-img" id="heroImgA" alt="">
+    <img class="hero-img" id="heroImgB" alt="">
+  </div>
 </div>
 
 <section id="work">
@@ -300,7 +313,6 @@
     <button class="tile" data-index="2"><div class="ph ph3"></div></button>
     <button class="tile" data-index="3"><div class="ph ph4"></div></button>
     <button class="tile" data-index="4"><div class="ph ph5"></div></button>
-    <button class="tile" data-index="5"><div class="ph ph6"></div></button>
   </div>
 </section>
 
@@ -336,32 +348,135 @@
 
 <script>
   const projects = [
-    { title: "Wolf & Ember", meta: "Dir. Marta Coen — Feature", ph: "ph1" },
-    { title: "Low Tide", meta: "Dir. Sam Ashworth — Feature", ph: "ph2" },
-    { title: "Harbour Light", meta: "Dir. Priya Nair — Feature", ph: "ph3" },
-    { title: "Nightshift", meta: "Dir. Elliot Frame — Series", ph: "ph4" },
-    { title: "Salt Circuit", meta: "Dir. Marta Coen — Commercial", ph: "ph5" },
-    { title: "The Long Field", meta: "Dir. Devon Ariyo — Feature", ph: "ph6" }
+    { title: "Little Pumpkin", meta: "Dir. Jessica Fisher — Short Film", ph: "ph1" },
+    { title: "BROOD", meta: "Dir. Sasha Aubort — Fashion Film", ph: "ph2" },
+    { title: "No Devil Lived On", meta: "Dir. Shuban Krishnar — Short Film", ph: "ph3" },
+    { title: "Chasing Harvey", meta: "Dir. Jessica Fisher — Short Film", ph: "ph4" },
+    { title: "Housemate from Hell", meta: "Dir. Jessica Fisher — Short Film", ph: "ph5" },
+    { title: "Mud Man", meta: "Dir. Madi Lee-Hislop — Short Film", ph: "ph6" }
   ];
 
-  /* Hero cycling — advances to the next featured project's frame on every page load */
+  /* Hero image cycling.
+     - First-ever visit: always shows hero-1.
+     - Every refresh after that: switches to a random image (different from last shown).
+     - While sitting on the page without refreshing: rotates to a new random image
+       every 5 minutes, crossfading between frames.
+     - focusX (0-100) is the horizontal position of each image's main subject,
+       used to re-centre the crop when the hero switches to the 9:16 vertical
+       layout on tall/narrow windows.
+     - excludeVertical:true means this image never displays in 9:16 mode — if
+       the viewport is already vertical, it's skipped when picking a new image;
+       if it's currently showing and the viewport turns vertical, the hero
+       automatically swaps to a different image.
+     Add new entries here as more images come in — nothing else needs to change. */
+  const HERO_IMAGES = [
+    { src: 'images/hero/hero-1.jpg',  focusX: 50 },
+    { src: 'images/hero/hero-2.jpg',  focusX: 50 },
+    { src: 'images/hero/hero-3.jpg',  focusX: 48 },
+    { src: 'images/hero/hero-4.jpg',  focusX: 50 },
+    { src: 'images/hero/hero-5.jpg',  focusX: 52 },
+    { src: 'images/hero/hero-6.jpg',  focusX: 50 },
+    { src: 'images/hero/hero-7.jpg',  focusX: 64 },
+    { src: 'images/hero/hero-8.jpg',  focusX: 50 },
+    { src: 'images/hero/hero-9.jpg',  focusX: 50 },
+    { src: 'images/hero/hero-10.jpg', focusX: 50 },
+    { src: 'images/hero/hero-11.jpg', focusX: 50 },
+    { src: 'images/hero/hero-12.jpg', focusX: 50 },
+    { src: 'images/hero/hero-13.jpg', focusX: 78 },
+    { src: 'images/hero/hero-14.jpg', focusX: 50 },
+    { src: 'images/hero/hero-15.jpg', focusX: 50, excludeVertical: true },
+    { src: 'images/hero/hero-20.jpg', focusX: 50, excludeVertical: true },
+    { src: 'images/hero/hero-21.jpg', focusX: 52 },
+    { src: 'images/hero/hero-22.jpg', focusX: 49 },
+    { src: 'images/hero/hero-23.jpg', focusX: 50 },
+    { src: 'images/hero/hero-24.jpg', focusX: 52 },
+    { src: 'images/hero/hero-25.jpg', focusX: 47 },
+    { src: 'images/hero/hero-26.jpg', focusX: 50 },
+    { src: 'images/hero/hero-27.jpg', focusX: 40 },
+    { src: 'images/hero/hero-28.jpg', focusX: 33 },
+    { src: 'images/hero/hero-29.jpg', focusX: 50 },
+    { src: 'images/hero/hero-30.jpg', focusX: 46 }
+  ];
+
   const heroFrame = document.getElementById('heroFrame');
-  const heroGradients = {
-    ph1:"linear-gradient(120deg,#1c1c1a 0%,#4a463d 45%,#8f8168 100%)",
-    ph2:"linear-gradient(120deg,#0e1418 0%,#233138 50%,#4d6a72 100%)",
-    ph3:"linear-gradient(120deg,#241512 0%,#6b3b2c 45%,#c98a54 100%)",
-    ph4:"linear-gradient(120deg,#101012 0%,#39383f 40%,#7d7b86 100%)"
-  };
-  const heroKeys = ["ph1","ph2","ph3","ph4"];
-  let heroIndex = 0;
-  try{
-    heroIndex = parseInt(localStorage.getItem('heroIndex') || '0', 10);
-    if(isNaN(heroIndex)) heroIndex = 0;
-    localStorage.setItem('heroIndex', (heroIndex + 1) % heroKeys.length);
-  }catch(e){
-    heroIndex = Math.floor(Math.random() * heroKeys.length);
+  const heroImgA = document.getElementById('heroImgA');
+  const heroImgB = document.getElementById('heroImgB');
+  let heroActiveImg = heroImgA;
+  let heroHiddenImg = heroImgB;
+  let heroCurrentIndex = 0;
+  let heroMode = 'landscape';
+
+  function applyFocusToActiveImg(){
+    const focusX = HERO_IMAGES[heroCurrentIndex].focusX;
+    heroActiveImg.style.objectPosition = (heroMode === 'vertical')
+      ? focusX + '% 50%'
+      : '50% 50%';
   }
-  heroFrame.style.setProperty('--hero-bg', heroGradients[heroKeys[heroIndex % heroKeys.length]]);
+
+  function isViewportVertical(){
+    return window.innerHeight > window.innerWidth * 1.05;
+  }
+
+  function pickRandomIndex(excludeIndex, avoidVerticalExcluded){
+    let pool = HERO_IMAGES.map((_, i) => i);
+    if(excludeIndex !== null && excludeIndex !== undefined){
+      pool = pool.filter(i => i !== excludeIndex);
+    }
+    if(avoidVerticalExcluded){
+      const filtered = pool.filter(i => !HERO_IMAGES[i].excludeVertical);
+      if(filtered.length > 0) pool = filtered;
+    }
+    if(pool.length === 0) pool = HERO_IMAGES.map((_, i) => i);
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function pickStartIndex(){
+    let visited = null;
+    let lastIndex = null;
+    try{
+      visited = localStorage.getItem('heroVisited');
+      lastIndex = parseInt(localStorage.getItem('heroCurrentIndex'), 10);
+    }catch(e){ /* storage unavailable — fall through to random */ }
+
+    if(!visited){
+      try{
+        localStorage.setItem('heroVisited', '1');
+        localStorage.setItem('heroCurrentIndex', '0');
+      }catch(e){}
+      return 0;
+    }
+
+    if(isNaN(lastIndex)) lastIndex = -1;
+    const next = pickRandomIndex(lastIndex, isViewportVertical());
+    try{ localStorage.setItem('heroCurrentIndex', String(next)); }catch(e){}
+    return next;
+  }
+
+  function crossfadeHeroTo(index){
+    heroCurrentIndex = index;
+    heroHiddenImg.src = HERO_IMAGES[index].src;
+    heroHiddenImg.style.objectPosition = (heroMode === 'vertical')
+      ? HERO_IMAGES[index].focusX + '% 50%'
+      : '50% 50%';
+    heroHiddenImg.classList.add('is-visible');
+    heroActiveImg.classList.remove('is-visible');
+    const tmp = heroActiveImg;
+    heroActiveImg = heroHiddenImg;
+    heroHiddenImg = tmp;
+    try{ localStorage.setItem('heroCurrentIndex', String(index)); }catch(e){}
+  }
+
+  // Initial paint (no fade — set directly so it's visible immediately)
+  heroCurrentIndex = pickStartIndex();
+  heroImgA.src = HERO_IMAGES[heroCurrentIndex].src;
+  heroImgA.classList.add('is-visible');
+
+  // Idle rotation every 5 minutes while the page stays open
+  const HERO_IDLE_MS = 5 * 60 * 1000;
+  setInterval(function(){
+    const next = pickRandomIndex(heroCurrentIndex, heroMode === 'vertical');
+    crossfadeHeroTo(next);
+  }, HERO_IDLE_MS);
 
   /* Fit the hero to exactly fill the space below the header, so Selected Work
      stays off-screen until the user scrolls — regardless of window size. */
@@ -385,10 +500,12 @@
     const sideBorderBase = 18;
 
     let contentW, contentH, sideBorder;
+    const previousMode = heroMode;
 
     if(availH > availW * 1.05){
       /* Viewport is more than 5% taller than it is wide: switch to a 9:16
          vertical frame. Side borders stay fixed (never grow) here. */
+      heroMode = 'vertical';
       sideBorder = sideBorderBase;
       contentW = Math.max(availW - (sideBorder * 2), 60);
       contentH = contentW * (16 / 9);
@@ -401,6 +518,7 @@
       /* Landscape (or only mildly portrait, under the 5% threshold): fill
          full available height at 16:9, letting the side borders grow to
          soak up any extra width on wide displays. */
+      heroMode = 'landscape';
       const ratio = 16 / 9;
       contentH = Math.max(availH - topBorder - bottomBorder, 60);
       contentW = contentH * ratio;
@@ -420,9 +538,17 @@
     heroFrame.style.borderBottomWidth = bottomBorder + 'px';
     heroFrame.style.borderLeftWidth = sideBorder + 'px';
     heroFrame.style.borderRightWidth = sideBorder + 'px';
+
+    if(heroMode === 'vertical' && HERO_IMAGES[heroCurrentIndex].excludeVertical){
+      // This image doesn't work as a 9:16 crop — swap to one that does.
+      crossfadeHeroTo(pickRandomIndex(heroCurrentIndex, true));
+    } else if(heroMode !== previousMode){
+      applyFocusToActiveImg();
+    }
   }
 
   sizeHero();
+  applyFocusToActiveImg();
   window.addEventListener('resize', sizeHero);
 
   /* Align the contact heading's first and last line exactly with the top
