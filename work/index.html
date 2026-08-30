@@ -54,19 +54,23 @@
 
   main{padding:20px 56px 100px;}
 
-  .stills{display:flex;flex-direction:column;gap:6px;}
+  .stills{display:flex;flex-direction:column;align-items:center;gap:6px;}
   .still{
     position:relative;
     width:100%;
-    aspect-ratio:21/9;
+    max-width:var(--still-max-width, calc((100vh - 170px) * 2));
+    aspect-ratio:2/1;
     overflow:hidden;
     border:none;
     padding:0;
     cursor:pointer;
     display:block;
     background:#222;
+    text-align:left;
   }
-  .still .ph{width:100%;height:100%;display:block;transition:transform .6s ease;}
+  /* The grid thumbnail is always the project's 1st image, cropped to fill
+     the 2:1 box (object-fit:cover), regardless of its native ratio. */
+  .still .ph{width:100%;height:100%;display:block;object-fit:cover;transition:transform .6s ease;}
   .still:hover .ph{transform:scale(1.02);}
   .still .caption{
     position:absolute;
@@ -77,15 +81,6 @@
   .still .caption .t{font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;}
   .still .caption .m{font-size:0.75rem;color:rgba(245,242,232,0.75);margin-top:4px;}
 
-  .ph1{background:linear-gradient(135deg,#1c1c1a,#4a463d 45%,#8f8168 100%);}
-  .ph2{background:linear-gradient(160deg,#0e1418,#233138 50%,#4d6a72 100%);}
-  .ph3{background:linear-gradient(140deg,#241512,#6b3b2c 45%,#c98a54 100%);}
-  .ph4{background:linear-gradient(150deg,#101012,#39383f 40%,#7d7b86 100%);}
-  .ph5{background:linear-gradient(130deg,#181410,#4f4232 45%,#a9915f 100%);}
-  .ph6{background:linear-gradient(155deg,#0c1210,#243c34 45%,#5c8a72 100%);}
-  .ph7{background:linear-gradient(145deg,#14100c,#4a3226 45%,#9c6b45 100%);}
-  .ph8{background:linear-gradient(165deg,#0d1214,#2c3a3f 50%,#6a8992 100%);}
-
   footer{padding:28px 56px 40px;font-size:0.75rem;color:var(--muted);display:flex;justify-content:center;}
 
   /* Carousel */
@@ -95,10 +90,22 @@
     opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:100;
   }
   .lightbox.open{opacity:1;pointer-events:auto;}
-  .lightbox-inner{max-width:1200px;width:100%;display:flex;flex-direction:column;gap:18px;}
-  .lightbox-frame{width:100%;aspect-ratio:16/9;border-radius:2px;opacity:1;transition:opacity .16s ease;}
+  .lightbox-inner{max-width:1600px;width:100%;display:flex;flex-direction:column;align-items:center;gap:18px;}
+  .lightbox-frame{
+    /* A real <img>, so the browser scales it to its own native ratio —
+       square, 4:3, 16:9, or ultra-wide 2.39:1 / 2.55:1 cinema stills all
+       just fit within these two caps without distortion. */
+    display:block;
+    max-width:100%;
+    max-height:min(70vh, 720px);
+    width:auto;
+    height:auto;
+    border-radius:2px;
+    opacity:1;
+    transition:opacity .16s ease;
+  }
   .lightbox-frame.fading{opacity:0;}
-  .lightbox-caption{display:flex;justify-content:space-between;align-items:baseline;color:#F5F2E8;}
+  .lightbox-caption{width:100%;display:flex;justify-content:space-between;align-items:baseline;color:#F5F2E8;text-align:left;}
   .lightbox-caption h3{font-size:1.1rem;font-weight:600;letter-spacing:0.02em;text-transform:uppercase;}
   .lightbox-caption p{font-size:0.82rem;color:rgba(245,242,232,0.65);margin-top:4px;}
   .lightbox-nav{display:flex;gap:14px;align-items:center;}
@@ -110,7 +117,6 @@
   @media(max-width:820px){
     header{padding:28px 24px;}
     main{padding:10px 24px 60px;}
-    .still{aspect-ratio:16/9;}
     .lightbox{padding:24px;}
     .lightbox-close{top:16px;right:20px;}
   }
@@ -131,32 +137,7 @@
 </header>
 
 <main>
-  <div class="stills" id="stillsList">
-    <button class="still" data-project="0"><div class="ph ph1"></div>
-      <div class="caption"><div class="t">Little Pumpkin</div><div class="m">Dir. Jessica Fisher — Short Film</div></div>
-    </button>
-    <button class="still" data-project="1"><div class="ph ph2"></div>
-      <div class="caption"><div class="t">BROOD</div><div class="m">Dir. Sasha Aubort — Fashion Film</div></div>
-    </button>
-    <button class="still" data-project="2"><div class="ph ph3"></div>
-      <div class="caption"><div class="t">No Devil Lived On</div><div class="m">Dir. Shuban Krishnar — Short Film</div></div>
-    </button>
-    <button class="still" data-project="3"><div class="ph ph4"></div>
-      <div class="caption"><div class="t">Chasing Harvey</div><div class="m">Dir. Jessica Fisher — Short Film</div></div>
-    </button>
-    <button class="still" data-project="4"><div class="ph ph5"></div>
-      <div class="caption"><div class="t">Housemate from Hell</div><div class="m">Dir. Jessica Fisher — Short Film</div></div>
-    </button>
-    <button class="still" data-project="5"><div class="ph ph7"></div>
-      <div class="caption"><div class="t">Solitude</div><div class="m">Dir. Maia Jorgensen — Short Film</div></div>
-    </button>
-    <button class="still" data-project="6"><div class="ph ph6"></div>
-      <div class="caption"><div class="t">Mud Man</div><div class="m">Dir. Madi Lee-Hislop — Short Film</div></div>
-    </button>
-    <button class="still" data-project="7"><div class="ph ph8"></div>
-      <div class="caption"><div class="t">Dont Bite</div><div class="m">Dir. Seth Griffiths-Kemp — Visualiser</div></div>
-    </button>
-  </div>
+  <div class="stills" id="stillsList"></div>
 </main>
 
 <footer><span>© 2026 Remy Webber</span></footer>
@@ -164,7 +145,7 @@
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lbClose" aria-label="Close">&times;</button>
   <div class="lightbox-inner">
-    <div class="lightbox-frame ph" id="lbFrame"></div>
+    <img class="lightbox-frame" id="lbFrame" alt="">
     <div class="lightbox-caption">
       <div>
         <h3 id="lbTitle"></h3>
@@ -180,25 +161,51 @@
 </div>
 
 <script>
-  /* Each project has its own set of stills (a few frames from that shoot) */
+  /* Single source of truth for every project. "slug" maps to both the
+     folder and filename prefix under images/work/, e.g. BROOD's images
+     live at images/work/brood/brood-1.png ... brood-11.png. "count" is
+     how many numbered stills that project has. */
   const projects = [
-    { title:"Little Pumpkin", meta:"Dir. Jessica Fisher — Short Film",
-      stills:[{ph:"ph1",filter:"none"},{ph:"ph1",filter:"hue-rotate(20deg) brightness(1.08)"},{ph:"ph1",filter:"hue-rotate(-15deg) brightness(0.92)"},{ph:"ph1",filter:"hue-rotate(35deg) brightness(1.02)"}] },
-    { title:"BROOD", meta:"Dir. Sasha Aubort — Fashion Film",
-      stills:[{ph:"ph2",filter:"none"},{ph:"ph2",filter:"hue-rotate(18deg) brightness(1.05)"},{ph:"ph2",filter:"hue-rotate(-20deg) brightness(0.95)"}] },
-    { title:"No Devil Lived On", meta:"Dir. Shuban Krishnar — Short Film",
-      stills:[{ph:"ph3",filter:"none"},{ph:"ph3",filter:"hue-rotate(14deg) brightness(1.06)"},{ph:"ph3",filter:"hue-rotate(-18deg) brightness(0.9)"},{ph:"ph3",filter:"hue-rotate(28deg) brightness(1.0)"}] },
-    { title:"Chasing Harvey", meta:"Dir. Jessica Fisher — Short Film",
-      stills:[{ph:"ph4",filter:"none"},{ph:"ph4",filter:"hue-rotate(22deg) brightness(1.04)"},{ph:"ph4",filter:"hue-rotate(-24deg) brightness(0.93)"}] },
-    { title:"Housemate from Hell", meta:"Dir. Jessica Fisher — Short Film",
-      stills:[{ph:"ph5",filter:"none"},{ph:"ph5",filter:"hue-rotate(16deg) brightness(1.07)"},{ph:"ph5",filter:"hue-rotate(-20deg) brightness(0.92)"}] },
-    { title:"Solitude", meta:"Dir. Maia Jorgensen — Short Film",
-      stills:[{ph:"ph7",filter:"none"},{ph:"ph7",filter:"hue-rotate(15deg) brightness(1.06)"},{ph:"ph7",filter:"hue-rotate(-18deg) brightness(0.9)"}] },
-    { title:"Mud Man", meta:"Dir. Madi Lee-Hislop — Short Film",
-      stills:[{ph:"ph6",filter:"none"},{ph:"ph6",filter:"hue-rotate(12deg) brightness(1.05)"},{ph:"ph6",filter:"hue-rotate(-16deg) brightness(0.94)"},{ph:"ph6",filter:"hue-rotate(26deg) brightness(1.0)"}] },
-    { title:"Dont Bite", meta:"Dir. Seth Griffiths-Kemp — Visualiser",
-      stills:[{ph:"ph8",filter:"none"},{ph:"ph8",filter:"hue-rotate(20deg) brightness(1.05)"},{ph:"ph8",filter:"hue-rotate(-22deg) brightness(0.93)"}] }
+    { title:"Little Pumpkin",       slug:"littlepumpkin",      meta:"Dir. Jessica Fisher — Short Film",       count:8  },
+    { title:"BROOD",                 slug:"brood",               meta:"Dir. Sasha Aubort — Fashion Film",       count:11 },
+    { title:"No Devil Lived On",    slug:"nodevillivedon",     meta:"Dir. Shuban Krishnar — Short Film",      count:8  },
+    { title:"Chasing Harvey",       slug:"chasingharvey",      meta:"Dir. Jessica Fisher — Short Film",       count:8  },
+    { title:"Housemate from Hell",  slug:"housematefromhell",  meta:"Dir. Jessica Fisher — Short Film",       count:10 },
+    { title:"Travel Money Oz — “Feverdream”", slug:"travelmoneyoz", meta:"Dir. Reilly Vanniekerk — Commercial", count:6 },
+    { title:"Solitude",             slug:"solitude",            meta:"Dir. Maia Jorgensen — Short Film",       count:9  },
+    { title:"Mud Man",              slug:"mudman",              meta:"Dir. Madi Lee-Hislop — Short Film",      count:7  },
+    { title:"Dont Bite",            slug:"dontbite",            meta:"Dir. Seth Griffiths-Kemp — Visualiser",  count:6  }
   ];
+
+  function stillUrl(project, n){
+    return 'images/work/' + project.slug + '/' + project.slug + '-' + n + '.png';
+  }
+
+  /* Cap the grid stills' width so that, at a 2:1 ratio, the resulting
+     height always leaves the first still fully visible beneath the
+     header — no matter how wide (or short) the viewport is. */
+  function setStillCap(){
+    const header = document.querySelector('header');
+    const main = document.querySelector('main');
+    const headerHeight = header.getBoundingClientRect().height;
+    const mainPaddingTop = parseFloat(getComputedStyle(main).paddingTop) || 0;
+    const available = window.innerHeight - headerHeight - mainPaddingTop;
+    const cappedWidth = Math.max(available, 0) * 2; // 2:1 aspect ratio
+    document.documentElement.style.setProperty('--still-max-width', cappedWidth + 'px');
+  }
+
+  function buildGrid(){
+    const container = document.getElementById('stillsList');
+    container.innerHTML = projects.map((p, i) => `
+      <button class="still" data-project="${i}">
+        <img class="ph" src="${stillUrl(p, 1)}" alt="${p.title} — still 1" loading="${i === 0 ? 'eager' : 'lazy'}">
+        <div class="caption"><div class="t">${p.title}</div><div class="m">${p.meta}</div></div>
+      </button>
+    `).join('');
+    container.querySelectorAll('.still').forEach(el => {
+      el.addEventListener('click', () => openLightbox(parseInt(el.dataset.project, 10)));
+    });
+  }
 
   const lightbox = document.getElementById('lightbox');
   const lbFrame = document.getElementById('lbFrame');
@@ -211,17 +218,16 @@
 
   function renderStill(){
     const p = projects[projIndex];
-    const s = p.stills[stillIndex];
-    lbFrame.className = 'lightbox-frame ph ' + s.ph;
-    lbFrame.style.filter = s.filter;
+    lbFrame.src = stillUrl(p, stillIndex + 1);
+    lbFrame.alt = p.title + ' — still ' + (stillIndex + 1);
     lbTitle.textContent = p.title;
     lbMeta.textContent = p.meta;
-    lbCounter.textContent = (stillIndex + 1) + ' / ' + p.stills.length;
+    lbCounter.textContent = (stillIndex + 1) + ' / ' + p.count;
   }
 
   function showStill(i, animate){
     const p = projects[projIndex];
-    stillIndex = (i + p.stills.length) % p.stills.length;
+    stillIndex = (i + p.count) % p.count;
     if(!animate){ renderStill(); return; }
     lbFrame.classList.add('fading');
     setTimeout(() => {
@@ -233,7 +239,7 @@
   function openLightbox(pIndex){
     lastFocused = document.activeElement;
     projIndex = pIndex;
-    stillIndex = 0;
+    stillIndex = 0; // the project's 1st image opens by default
     renderStill();
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -245,10 +251,6 @@
     document.body.style.overflow = '';
     if(lastFocused) lastFocused.focus();
   }
-
-  document.querySelectorAll('#stillsList .still').forEach(el => {
-    el.addEventListener('click', () => openLightbox(parseInt(el.dataset.project, 10)));
-  });
 
   document.getElementById('lbClose').addEventListener('click', closeLightbox);
   document.getElementById('lbPrev').addEventListener('click', () => showStill(stillIndex - 1, true));
@@ -262,6 +264,11 @@
     if(e.key === 'ArrowLeft') showStill(stillIndex - 1, true);
     if(e.key === 'ArrowRight') showStill(stillIndex + 1, true);
   });
+
+  setStillCap();
+  buildGrid();
+  window.addEventListener('resize', setStillCap);
+  window.addEventListener('load', setStillCap);
 </script>
 
 </body>
