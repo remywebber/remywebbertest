@@ -161,10 +161,11 @@
 </div>
 
 <script>
-  /* Single source of truth for every project. "slug" maps to both the
-     folder and filename prefix under images/work/, e.g. BROOD's images
-     live at images/work/brood/brood-1.png ... brood-11.png. "count" is
-     how many numbered stills that project has. */
+  /* Single source of truth for every project. "slug" is both the folder
+     name and the filename prefix under images/work/ (lowercase, no
+     spaces, matching how folders are named on GitHub), e.g. BROOD's
+     images live at images/work/brood/brood-1.png ... brood-11.png.
+     "count" is how many numbered stills that project has. */
   const projects = [
     { title:"Little Pumpkin",       slug:"littlepumpkin",      meta:"Dir. Jessica Fisher — Short Film",       count:8  },
     { title:"BROOD",                 slug:"brood",               meta:"Dir. Sasha Aubort — Fashion Film",       count:11 },
