@@ -75,8 +75,8 @@
     line-height:1.35;
   }
   /* Make the first line slightly larger */
-  #contact h2 .lead{display:block;}
-  #contact h2 .sub{display:block;font-size:0.88em;}
+  #contact h2 .lead{display:block;color:#9D7D5C;}
+  #contact h2 .sub{display:block;font-size:0.88em;margin-top:0.65em;}
   .contact-details{font-size:0.9rem;color:var(--muted);} 
   .contact-details .row{
     display:flex;
@@ -84,7 +84,10 @@
     padding:16px 0;
     border-bottom:1px solid var(--line);
   }
-  .contact-details .row span:first-child{color:var(--ink);font-weight:500;} 
+  .contact-details .row > :first-child{color:var(--ink);font-weight:500;}
+  .contact-details .row > :last-child{color:#9D7D5C;}
+  .contact-details .row .ig-label{display:inline-flex;align-items:center;gap:8px;}
+  .contact-details .row .ig-label img{width:1em;height:1em;display:block;} 
   .contact-details .row a{border-bottom:1px solid transparent;} 
   .contact-details .row a:hover{border-color:var(--ink);} 
 
@@ -112,10 +115,10 @@
 
 <main>
   <section id="contact">
-    <h2><span class="lead">Let's work together!</span><br><span class="sub">Available for all narrative, documentary, music video,<br>and commercial work</span></h2>
+    <h2><span class="lead">Let's Work Together!</span><span class="sub">Available for all narrative, documentary, music video,<br>and commercial work</span></h2>
     <div class="contact-details">
       <div class="row"><span>Email</span><a href="mailto:info@remywebber.com">info@remywebber.com</a></div>
-      <div class="row"><span>Instagram</span><a href="#">@remy_webber</a></div>
+      <div class="row"><a class="ig-label" href="https://www.instagram.com/remy_webber/">Instagram<img src="images/icons/instagram.png" alt="Instagram"></a><a href="https://www.instagram.com/remy_webber/">@remy_webber</a></div>
       <div class="row"><span>Based in</span><span>Queensland, Australia</span></div>
     </div>
   </section>
@@ -124,27 +127,22 @@
 <footer><span>© 2026 Remy Webber</span></footer>
 
 <script>
-  /* Align the contact heading's first and last line exactly with the top
-     and bottom of the contact-details block, regardless of copy length. */
+  /* Match the contact heading's total height to the contact-details block
+     without touching its own line-height — so the two heading lines keep
+     their normal, tight spacing, and any leftover height is added as
+     invisible space below the text instead of stretched between the lines. */
   function fitContactHeading(){
     const heading = document.querySelector('#contact h2');
     const details = document.querySelector('.contact-details');
     if(!heading || !details) return;
 
-    const fontSizePx = parseFloat(getComputedStyle(heading).fontSize);
-    const baseLineHeight = fontSizePx * 1.35; // matches the CSS's intended ratio, in px
-
-    heading.style.height = 'auto';
-    heading.style.lineHeight = baseLineHeight + 'px';
+    heading.style.paddingBottom = '0px';
 
     const naturalH = heading.offsetHeight;
-    const lines = Math.max(Math.round(naturalH / baseLineHeight), 1);
     const targetH = details.offsetHeight;
+    const extra = targetH - naturalH;
 
-    if(lines > 0 && targetH > 0){
-      heading.style.lineHeight = (targetH / lines) + 'px';
-      heading.style.height = targetH + 'px';
-    }
+    heading.style.paddingBottom = (extra > 0 ? extra : 0) + 'px';
   }
 
   fitContactHeading();
