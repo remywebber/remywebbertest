@@ -2,36 +2,47 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Work — Remy Webber</title>
+<title>Work Portfolio | Remy Webber - Cinematographer, DP & DOP | Australia</title>
+<meta name="description" content="View the cinematography portfolio of Remy Webber. Featuring short films, fashion, and commercial work shot on the Alexa Mini across Queensland and Australia.">
+<meta name="keywords" content="Remy Webber portfolio, Cinematography work, Australian DP, DOP, Director of Photography, Alexa Mini, ARRI Alexa Mini, Reilly Vanniekerk, Maia Jorgensen, Seth Griffiths-Kemp, Madi Lee-Hislop">
+<meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta property="og:title" content="Cinematography Portfolio | Remy Webber">
+<meta property="og:description" content="Explore the selected works of award-winning, emerging Cinematographer and DOP Remy Webber.">
+
+<!-- JSON-LD Collection Page Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Cinematography Portfolio of Remy Webber",
+  "url": "https://remywebber.com/work/",
+  "about": {
+    "@type": "Person",
+    "name": "Remy Webber",
+    "jobTitle": ["Cinematographer", "Director of Photography", "DOP", "DP"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Brisbane",
+      "addressRegion": "Queensland",
+      "addressCountry": "AU"
+    }
+  }
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --paper:#FFFEFB;
-    --ink:#151412;
-    --muted:#8A8674;
-    --line:#E3DECD;
-  }
+  :root{ --paper:#FFFEFB; --ink:#151412; --muted:#8A8674; --line:#E3DECD; }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    line-height:1.5;
-  }
+  body{ background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.5; }
   a{color:inherit;text-decoration:none;}
   ::selection{background:var(--ink);color:var(--paper);}
 
-  header{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    padding:44px 56px 40px;
-    flex-wrap:wrap;
-    gap:20px;
-  }
+  header{ display:flex; justify-content:space-between; align-items:flex-start; padding:44px 56px 40px; flex-wrap:wrap; gap:20px; }
   .id-block{display:flex;flex-direction:column;align-items:center;}
   .id-block h1{font-size:1.9rem;font-weight:700;letter-spacing:0.01em;text-transform:uppercase;}
   .id-block .role{margin-top:4px;font-size:0.7rem;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;text-align:center;}
@@ -39,71 +50,29 @@
   nav a{font-size:0.82rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink);padding-bottom:4px;border-bottom:1px solid transparent;transition:border-color .15s ease;}
   nav a:hover, nav a.active{border-color:var(--ink);}
 
+  /* Utility class to hide element visually but keep it for screen readers/SEO */
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
   @media (orientation: portrait){
-    header{
-      flex-direction:column;
-      align-items:center;
-      text-align:center;
-    }
-    nav{
-      justify-content:center;
-      width:100%;
-      padding-top:4px;
-    }
+    header{ flex-direction:column; align-items:center; text-align:center; }
+    nav{ justify-content:center; width:100%; padding-top:4px; }
   }
 
   main{padding:20px 56px 100px;}
-
   .stills{display:flex;flex-direction:column;align-items:center;gap:6px;}
-  .still{
-    position:relative;
-    width:100%;
-    max-width:var(--still-max-width, calc((100vh - 170px) * 2));
-    aspect-ratio:2/1;
-    overflow:hidden;
-    border:none;
-    padding:0;
-    cursor:pointer;
-    display:block;
-    background:#222;
-    text-align:left;
-  }
-  /* The grid thumbnail is always the project's 1st image, cropped to fill
-     the 2:1 box (object-fit:cover), regardless of its native ratio. */
+  .still{ position:relative; width:100%; max-width:var(--still-max-width, calc((100vh - 170px) * 2)); aspect-ratio:2/1; overflow:hidden; border:none; padding:0; cursor:pointer; display:block; background:#222; text-align:left; }
   .still .ph{width:100%;height:100%;display:block;object-fit:cover;transition:transform .6s ease;}
   .still:hover .ph{transform:scale(1.02);}
-  .still .caption{
-    position:absolute;
-    left:24px;bottom:20px;
-    color:#F5F2E8;
-    text-shadow:0 2px 12px rgba(0,0,0,0.5);
-  }
+  .still .caption{ position:absolute; left:24px;bottom:20px; color:#F5F2E8; text-shadow:0 2px 12px rgba(0,0,0,0.5); }
   .still .caption .t{font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;}
   .still .caption .m{font-size:0.75rem;color:rgba(245,242,232,0.75);margin-top:4px;}
-
   footer{padding:28px 56px 40px;font-size:0.75rem;color:var(--muted);display:flex;justify-content:center;}
 
   /* Carousel */
-  .lightbox{
-    position:fixed;inset:0;background:rgba(10,9,7,0.94);
-    display:flex;align-items:center;justify-content:center;padding:60px;
-    opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:100;
-  }
+  .lightbox{ position:fixed;inset:0;background:rgba(10,9,7,0.94); display:flex;align-items:center;justify-content:center;padding:60px; opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:100; }
   .lightbox.open{opacity:1;pointer-events:auto;}
   .lightbox-inner{max-width:1600px;width:100%;display:flex;flex-direction:column;align-items:center;gap:18px;}
-  .lightbox-frame{
-    /* A real <img>, so the browser scales it to its own native ratio —
-       square, 4:3, 16:9, or ultra-wide 2.39:1 / 2.55:1 cinema stills all
-       just fit within these two caps without distortion. */
-    display:block;
-    max-width:100%;
-    max-height:min(70vh, 720px);
-    width:auto;
-    height:auto;
-    border-radius:2px;
-    opacity:1;
-    transition:opacity .16s ease;
-  }
+  .lightbox-frame{ display:block; max-width:100%; max-height:min(70vh, 720px); width:auto; height:auto; border-radius:2px; opacity:1; transition:opacity .16s ease; }
   .lightbox-frame.fading{opacity:0;}
   .lightbox-caption{width:100%;display:flex;justify-content:space-between;align-items:baseline;color:#F5F2E8;text-align:left;}
   .lightbox-caption h3{font-size:1.1rem;font-weight:600;letter-spacing:0.02em;text-transform:uppercase;}
@@ -130,19 +99,20 @@
     <a href="../"><h1>Remy Webber</h1></a>
     <div class="role">Director of Photography</div>
   </div>
-  <nav>
+  <nav aria-label="Main Navigation">
     <a href="./" class="active">Work</a>
     <a href="../contact/">Contact</a>
   </nav>
 </header>
 
 <main>
+  <h2 class="sr-only">Cinematography Portfolio</h2>
   <div class="stills" id="stillsList"></div>
 </main>
 
-<footer><span>© 2026 Remy Webber</span></footer>
+<footer><span>© 2026 Remy Webber - Australian DP & DOP</span></footer>
 
-<div class="lightbox" id="lightbox">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <button class="lightbox-close" id="lbClose" aria-label="Close">&times;</button>
   <div class="lightbox-inner">
     <img class="lightbox-frame" id="lbFrame" alt="">
@@ -161,11 +131,6 @@
 </div>
 
 <script>
-  /* Single source of truth for every project. "slug" is both the folder
-     name and the filename prefix under images/work/ (lowercase, no
-     spaces, matching how folders are named on GitHub), e.g. BROOD's
-     images live at images/work/brood/brood-1.png ... brood-11.png.
-     "count" is how many numbered stills that project has. */
   const projects = [
     { title:"Little Pumpkin",       slug:"littlepumpkin",      meta:"Dir. Jessica Fisher — Short Film",       count:8  },
     { title:"BROOD",                 slug:"brood",               meta:"Dir. Sasha Aubort — Fashion Film",       count:11 },
@@ -178,31 +143,33 @@
     { title:"Dont Bite",            slug:"dontbite",            meta:"Dir. Seth Griffiths-Kemp — Visualiser",  count:6  }
   ];
 
-  function stillUrl(project, n){
-    return 'images/work/' + project.slug + '/' + project.slug + '-' + n + '.png';
-  }
+  function stillUrl(project, n){ return 'images/work/' + project.slug + '/' + project.slug + '-' + n + '.png'; }
 
-  /* Cap the grid stills' width so that, at a 2:1 ratio, the resulting
-     height always leaves the first still fully visible beneath the
-     header — no matter how wide (or short) the viewport is. */
   function setStillCap(){
     const header = document.querySelector('header');
     const main = document.querySelector('main');
     const headerHeight = header.getBoundingClientRect().height;
     const mainPaddingTop = parseFloat(getComputedStyle(main).paddingTop) || 0;
     const available = window.innerHeight - headerHeight - mainPaddingTop;
-    const cappedWidth = Math.max(available, 0) * 2; // 2:1 aspect ratio
+    const cappedWidth = Math.max(available, 0) * 2; 
     document.documentElement.style.setProperty('--still-max-width', cappedWidth + 'px');
   }
 
   function buildGrid(){
     const container = document.getElementById('stillsList');
-    container.innerHTML = projects.map((p, i) => `
-      <button class="still" data-project="${i}">
-        <img class="ph" src="${stillUrl(p, 1)}" alt="${p.title} — still 1" loading="${i === 0 ? 'eager' : 'lazy'}">
-        <div class="caption"><div class="t">${p.title}</div><div class="m">${p.meta}</div></div>
-      </button>
-    `).join('');
+    // Rotate through job title permutations automatically
+    const jobTitles = ["Cinematography", "DP", "DOP", "Director of Photography"];
+    
+    container.innerHTML = projects.map((p, i) => {
+      const activeTitle = jobTitles[i % jobTitles.length];
+      return `
+        <button class="still" data-project="${i}" aria-label="View ${p.title}">
+          <img class="ph" src="${stillUrl(p, 1)}" alt="${p.title} - ${activeTitle} by Remy Webber, ${p.meta}, shot in Australia" loading="${i === 0 ? 'eager' : 'lazy'}">
+          <div class="caption"><div class="t">${p.title}</div><div class="m">${p.meta}</div></div>
+        </button>
+      `;
+    }).join('');
+    
     container.querySelectorAll('.still').forEach(el => {
       el.addEventListener('click', () => openLightbox(parseInt(el.dataset.project, 10)));
     });
@@ -220,7 +187,7 @@
   function renderStill(){
     const p = projects[projIndex];
     lbFrame.src = stillUrl(p, stillIndex + 1);
-    lbFrame.alt = p.title + ' — still ' + (stillIndex + 1);
+    lbFrame.alt = p.title + ' - Cinematography by Remy Webber, ' + p.meta;
     lbTitle.textContent = p.title;
     lbMeta.textContent = p.meta;
     lbCounter.textContent = (stillIndex + 1) + ' / ' + p.count;
@@ -231,16 +198,13 @@
     stillIndex = (i + p.count) % p.count;
     if(!animate){ renderStill(); return; }
     lbFrame.classList.add('fading');
-    setTimeout(() => {
-      renderStill();
-      lbFrame.classList.remove('fading');
-    }, 160);
+    setTimeout(() => { renderStill(); lbFrame.classList.remove('fading'); }, 160);
   }
 
   function openLightbox(pIndex){
     lastFocused = document.activeElement;
     projIndex = pIndex;
-    stillIndex = 0; // the project's 1st image opens by default
+    stillIndex = 0; 
     renderStill();
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -256,9 +220,7 @@
   document.getElementById('lbClose').addEventListener('click', closeLightbox);
   document.getElementById('lbPrev').addEventListener('click', () => showStill(stillIndex - 1, true));
   document.getElementById('lbNext').addEventListener('click', () => showStill(stillIndex + 1, true));
-
   lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
-
   document.addEventListener('keydown', (e) => {
     if(!lightbox.classList.contains('open')) return;
     if(e.key === 'Escape') closeLightbox();
