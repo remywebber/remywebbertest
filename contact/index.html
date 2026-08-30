@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Contact Remy Webber | Australian Cinematographer, DP & DOP</title>
+<title>Contact Remy Webber | Award-Winning Cinematographer</title>
 <meta name="description" content="Get in touch with Remy Webber, an emerging Australian Director of Photography, DP, and DOP. Alexa Mini owner/operator based in Brisbane, available across Queensland and Australia.">
 <meta name="keywords" content="Contact Remy Webber, Hire Cinematographer Australia, Freelance DOP Queensland, DP Brisbane, Alexa Mini Operator, Australian Director of Photography">
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta property="og:title" content="Contact Remy Webber | Cinematographer & DOP">
+<meta property="og:title" content="Contact Remy Webber | Award-Winning Cinematographer">
 <meta property="og:description" content="Available for all narrative, documentary, music video, and commercial work across Australia.">
 
 <!-- JSON-LD Contact Page Schema -->
@@ -60,14 +60,14 @@
   }
 
   main{ flex:1; display:flex; align-items:flex-start; }
-  #contact{ padding:80px 56px 100px; display:grid; grid-template-columns:1.3fr 1fr; gap:48px; width:100%; align-items:stretch; }
-  #contact h2{ font-size:clamp(1.6rem,2.4vw,2.05rem); font-weight:600; max-width:20ch; letter-spacing:-0.01em; line-height:1.35; }
-  #contact h2 .lead{display:block;color:#9D7D5C;}
-  #contact h2 .sub{display:block;font-size:0.88em;margin-top:0.65em;}
+  #contact{ padding:120px 56px 100px; display:grid; grid-template-columns:1.3fr 1fr; gap:48px; width:100%; align-items:stretch; }
+  #contact h2{ font-size:clamp(1.4rem,2.1vw,1.85rem); font-weight:600; max-width:20ch; letter-spacing:-0.01em; line-height:1.35; }
+  #contact h2 .lead{display:block;margin-bottom:0;font-size:0.98em;line-height:1;color:#9D7D5C;}
+  #contact h2 .sub{display:block;font-size:0.82em;margin-top:0;line-height:1;}
   .contact-details{font-size:0.9rem;color:var(--muted);} 
   .contact-details .row{ display:flex; justify-content:space-between; padding:16px 0; border-bottom:1px solid var(--line); }
   .contact-details .row > :first-child{color:var(--ink);font-weight:500;}
-  .contact-details .row > :last-child{color:#9D7D5C; text-align:right;}
+  .contact-details .row > :last-child{color:#9D7D5C;}
   .contact-details .row .ig-label{display:inline-flex;align-items:center;gap:8px;}
   .contact-details .row .ig-label img{width:1em;height:1em;display:block;} 
   .contact-details .row a{border-bottom:1px solid transparent;} 
@@ -94,29 +94,39 @@
   </nav>
 </header>
 
-   <section id="contact">
+<main>
+  <section id="contact">
     <h2><span class="lead">Let's Work Together!</span><br><span class="sub">Available for all narrative, documentary, music video,<br>and commercial work</span></h2>
     <div class="contact-details">
       <div class="row"><span>Email</span><a href="mailto:info@remywebber.com">info@remywebber.com</a></div>
-      <div class="row"><a class="ig-label" href="https://www.instagram.com/remy_webber/" target="_blank" rel="noopener noreferrer">Instagram<img src="images/icons/instagram.png" alt="Remy Webber Instagram"></a><a href="https://www.instagram.com/remy_webber/" target="_blank" rel="noopener noreferrer">@remy_webber</a></div>
+      <div class="row"><a class="ig-label" href="https://www.instagram.com/remy_webber/" target="_blank" rel="noopener noreferrer">Instagram<img src="../images/icons/instagram.png" alt="Remy Webber Instagram"></a><a href="https://www.instagram.com/remy_webber/" target="_blank" rel="noopener noreferrer">@remy_webber</a></div>
       <div class="row"><span>Based in</span><span>Queensland, Australia</span></div>
     </div>
   </section>
 </main>
 
-<footer><span>© 2026 Remy Webber - DOP & Cinematographer</span></footer>
+<footer><span>© 2026 Remy Webber</span></footer>
 
 <script>
   function fitContactHeading(){
     const heading = document.querySelector('#contact h2');
     const details = document.querySelector('.contact-details');
     if(!heading || !details) return;
-
-    heading.style.paddingBottom = '0px';
+    const fontSizePx = parseFloat(getComputedStyle(heading).fontSize);
+    const baseLineHeight = fontSizePx * 1.35; 
+    heading.style.height = 'auto';
+    heading.style.lineHeight = baseLineHeight + 'px';
     const naturalH = heading.offsetHeight;
+    const lines = Math.max(Math.round(naturalH / baseLineHeight), 1);
     const targetH = details.offsetHeight;
-    const extra = targetH - naturalH;
-    heading.style.paddingBottom = (extra > 0 ? extra : 0) + 'px';
+
+    if(lines > 0 && targetH > 0){
+      let desiredLineHeight = (targetH / lines);
+      const maxLineHeight = baseLineHeight * 1.02; 
+      if(desiredLineHeight > maxLineHeight) desiredLineHeight = maxLineHeight;
+      heading.style.lineHeight = desiredLineHeight + 'px';
+      heading.style.height = (desiredLineHeight * lines) + 'px';
+    }
   }
 
   fitContactHeading();
