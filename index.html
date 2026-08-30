@@ -150,6 +150,13 @@
     text-align:left;
     cursor:zoom-in;
   }
+  .grid .tile img{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform .5s ease;
+  }
+  .grid .tile:hover img{transform:scale(1.035);}
   .grid .tile .ph{
     width:100%;height:100%;
     object-fit:cover;
@@ -229,6 +236,14 @@
     border-radius:2px;
     opacity:1;
     transition:opacity .16s ease;
+    background:#1a1a18;
+    overflow:hidden;
+  }
+  .lightbox-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
   }
   .lightbox-frame.fading{opacity:0;}
   .lightbox-caption{
@@ -308,11 +323,12 @@
     <h2>Selected Work</h2>
   </div>
   <div class="grid" id="workGrid">
-    <button class="tile" data-index="0"><div class="ph ph1"></div></button>
-    <button class="tile" data-index="1"><div class="ph ph2"></div></button>
-    <button class="tile" data-index="2"><div class="ph ph3"></div></button>
-    <button class="tile" data-index="3"><div class="ph ph4"></div></button>
-    <button class="tile" data-index="4"><div class="ph ph5"></div></button>
+    <button class="tile" data-index="0"><img src="selected/littlepumpkin.jpg" alt="Little Pumpkin"></button>
+    <button class="tile" data-index="1"><img src="selected/brood.jpg" alt="BROOD"></button>
+    <button class="tile" data-index="2"><img src="selected/nodevillivedon.jpg" alt="No Devil Lived On"></button>
+    <button class="tile" data-index="3"><img src="selected/chasingharvey.jpg" alt="Chasing Harvey"></button>
+    <button class="tile" data-index="4"><img src="selected/housematefromhell.jpg" alt="Housemate from Hell"></button>
+    <button class="tile" data-index="5"><img src="selected/mudman.jpg" alt="Mud Man"></button>
   </div>
 </section>
 
@@ -332,7 +348,7 @@
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lbClose" aria-label="Close">&times;</button>
   <div class="lightbox-inner">
-    <div class="lightbox-frame ph" id="lbFrame"></div>
+    <div class="lightbox-frame" id="lbFrame"></div>
     <div class="lightbox-caption">
       <div>
         <h3 id="lbTitle"></h3>
@@ -348,12 +364,12 @@
 
 <script>
   const projects = [
-    { title: "Little Pumpkin", meta: "Dir. Jessica Fisher — Short Film", ph: "ph1" },
-    { title: "BROOD", meta: "Dir. Sasha Aubort — Fashion Film", ph: "ph2" },
-    { title: "No Devil Lived On", meta: "Dir. Shuban Krishnar — Short Film", ph: "ph3" },
-    { title: "Chasing Harvey", meta: "Dir. Jessica Fisher — Short Film", ph: "ph4" },
-    { title: "Housemate from Hell", meta: "Dir. Jessica Fisher — Short Film", ph: "ph5" },
-    { title: "Mud Man", meta: "Dir. Madi Lee-Hislop — Short Film", ph: "ph6" }
+    { title: "Little Pumpkin", meta: "Dir. Jessica Fisher — Short Film", image: "selected/littlepumpkin.jpg" },
+    { title: "BROOD", meta: "Dir. Sasha Aubort — Fashion Film", image: "selected/brood.jpg" },
+    { title: "No Devil Lived On", meta: "Dir. Shuban Krishnar — Short Film", image: "selected/nodevillivedon.jpg" },
+    { title: "Chasing Harvey", meta: "Dir. Jessica Fisher — Short Film", image: "selected/chasingharvey.jpg" },
+    { title: "Housemate from Hell", meta: "Dir. Jessica Fisher — Short Film", image: "selected/housematefromhell.jpg" },
+    { title: "Mud Man", meta: "Dir. Madi Lee-Hislop — Short Film", image: "selected/mudman.jpg" }
   ];
 
   /* Hero image cycling.
@@ -591,7 +607,7 @@
   function renderProject(i){
     currentIndex = (i + projects.length) % projects.length;
     const p = projects[currentIndex];
-    lbFrame.className = 'lightbox-frame ph ' + p.ph;
+    lbFrame.innerHTML = '<img src="' + p.image + '" alt="' + p.title + '">';
     lbTitle.textContent = p.title;
     lbMeta.textContent = p.meta;
   }
