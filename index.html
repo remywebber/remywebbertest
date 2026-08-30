@@ -111,7 +111,8 @@
     object-fit:cover;
     display:block;
     opacity:0;
-    transition:opacity 1.1s ease;
+    transition:opacity 1.1s ease, transform .5s ease;
+    transform-origin:50% 50%;
   }
   .hero-img.is-visible{opacity:1;}
 
@@ -503,8 +504,7 @@
 
   function sizeHero(){
     const headerH = headerEl.offsetHeight;
-    const availH = Math.max(window.innerHeight - headerH, 200);
-    heroWrap.style.height = availH + 'px';
+    const baseAvailH = Math.max(window.innerHeight - headerH, 200);
 
     const wrapStyles = getComputedStyle(heroWrap);
     const padX = parseFloat(wrapStyles.paddingLeft) + parseFloat(wrapStyles.paddingRight);
@@ -520,25 +520,56 @@
     let contentW, contentH, sideBorder;
     const previousMode = heroMode;
 
-    if(availH > availW * 1.05){
+    if(baseAvailH > availW * 1.05){
       /* Viewport is more than 5% taller than it is wide: switch to a 9:16
          vertical frame. Side borders stay fixed (never grow) here. */
       heroMode = 'vertical';
       sideBorder = sideBorderBase;
       contentW = Math.max(availW - (sideBorder * 2), 60);
       contentH = contentW * (16 / 9);
-      const maxContentH = availH - topBorder - bottomBorder;
+      const maxContentH = baseAvailH - topBorder - bottomBorder;
       if(contentH > maxContentH){
         contentH = Math.max(maxContentH, 60);
         contentW = contentH * (9 / 16);
       }
+      // Increase hero image size by 10% in vertical mode (visual zoom)
+      const ZOOM = 1.10;
+      // We apply a visual zoom to the image contents and add a small extra
+      // buffer to the heroWrap height so the following "Selected Work"
+      // section stays off-screen on load.
+      const extraForViewport = Math.ceil(contentH * (ZOOM - 1));
+
+      heroFrame.style.width = contentW + 'px';
+      heroFrame.style.height = contentH + 'px';
+      heroFrame.style.borderTopWidth = topBorder + 'px';
+      heroFrame.style.borderBottomWidth = bottomBorder + 'px';
+      heroFrame.style.borderLeftWidth = sideBorder + 'px';
+      heroFrame.style.borderRightWidth = sideBorder + 'px';
+
+      // Apply the 10% visual zoom to the hero images (they're absolutely positioned inside the frame)
+      heroActiveImg.style.transform = 'scale(' + ZOOM + ')';
+      heroHiddenImg.style.transform = 'scale(' + ZOOM + ')';
+
+      // Increase the heroWrap height by the extra zoom amount so that the
+      // next section remains off-screen on initial load.
+      heroWrap.style.height = (baseAvailH + extraForViewport) + 'px';
+
+      // If the currently showing image is flagged excludeVertical, swap it
+      // out to one that works for vertical cropping.
+      if(HERO_IMAGES[heroCurrentIndex].excludeVertical){
+        crossfadeHeroTo(pickRandomIndex(heroCurrentIndex, true));
+      } else if(heroMode !== previousMode){
+        applyFocusToActiveImg();
+      }
+
+      return;
     } else {
       /* Landscape (or only mildly portrait, under the 5% threshold): fill
          full available height at 16:9, letting the side borders grow to
          soak up any extra width on wide displays. */
       heroMode = 'landscape';
       const ratio = 16 / 9;
-      contentH = Math.max(availH - topBorder - bottomBorder, 60);
+      contentH = Math.max(baseAvailH - topBorder - bottomBorder, 60);
       contentW = contentH * ratio;
       const maxContentW = availW - (sideBorderBase * 2);
       if(contentW > maxContentW){
@@ -548,20 +579,26 @@
       } else {
         sideBorder = (availW - contentW) / 2;
       }
-    }
 
-    heroFrame.style.width = contentW + 'px';
-    heroFrame.style.height = contentH + 'px';
-    heroFrame.style.borderTopWidth = topBorder + 'px';
-    heroFrame.style.borderBottomWidth = bottomBorder + 'px';
-    heroFrame.style.borderLeftWidth = sideBorder + 'px';
-    heroFrame.style.borderRightWidth = sideBorder + 'px';
+      heroFrame.style.width = contentW + 'px';
+      heroFrame.style.height = contentH + 'px';
+      heroFrame.style.borderTopWidth = topBorder + 'px';
+      heroFrame.style.borderBottomWidth = bottomBorder + 'px';
+      heroFrame.style.borderLeftWidth = sideBorder + 'px';
+      heroFrame.style.borderRightWidth = sideBorder + 'px';
 
-    if(heroMode === 'vertical' && HERO_IMAGES[heroCurrentIndex].excludeVertical){
-      // This image doesn't work as a 9:16 crop — swap to one that does.
-      crossfadeHeroTo(pickRandomIndex(heroCurrentIndex, true));
-    } else if(heroMode !== previousMode){
-      applyFocusToActiveImg();
+      // Reset any visual zoom we applied in vertical mode
+      heroActiveImg.style.transform = '';
+      heroHiddenImg.style.transform = '';
+
+      // Use the normal heroWrap height (fills available area below header)
+      heroWrap.style.height = baseAvailH + 'px';
+
+      if(heroMode !== previousMode){
+        applyFocusToActiveImg();
+      }
+
+      return;
     }
   }
 
