@@ -24,7 +24,7 @@
     flex-direction:column;
   }
   a{color:inherit;text-decoration:none;}
-  ::selection{background:var(--ink);color:var(--paper);}
+  ::selection{background:var(--ink);color:var(--paper);} 
 
   header{
     display:flex;
@@ -74,16 +74,19 @@
     letter-spacing:-0.01em;
     line-height:1.35;
   }
-  .contact-details{font-size:0.9rem;color:var(--muted);}
+  /* Make the first line slightly larger */
+  #contact h2 .lead{display:block;font-size:1.12em}
+  #contact h2 .sub{display:block}
+  .contact-details{font-size:0.9rem;color:var(--muted);} 
   .contact-details .row{
     display:flex;
     justify-content:space-between;
     padding:16px 0;
     border-bottom:1px solid var(--line);
   }
-  .contact-details .row span:first-child{color:var(--ink);font-weight:500;}
-  .contact-details .row a{border-bottom:1px solid transparent;}
-  .contact-details .row a:hover{border-color:var(--ink);}
+  .contact-details .row span:first-child{color:var(--ink);font-weight:500;} 
+  .contact-details .row a{border-bottom:1px solid transparent;} 
+  .contact-details .row a:hover{border-color:var(--ink);} 
 
   footer{padding:28px 56px 40px;font-size:0.75rem;color:var(--muted);display:flex;justify-content:center;}
 
@@ -109,7 +112,7 @@
 
 <main>
   <section id="contact">
-    <h2>Available for narrative, documentary, and commercial work</h2>
+    <h2><span class="lead">Lets work together!</span><br><span class="sub">Available for all narrative, documentary, music video,<br>and commercial work</span></h2>
     <div class="contact-details">
       <div class="row"><span>Email</span><a href="mailto:info@remywebber.com">info@remywebber.com</a></div>
       <div class="row"><span>Instagram</span><a href="#">@remy_webber</a></div>
