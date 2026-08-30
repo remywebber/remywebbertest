@@ -192,8 +192,8 @@
     line-height:1.35;
   }
   /* reduce spacing between the two lines and make both slightly smaller */
-  #contact h2 .lead{display:block;margin-bottom:0.12em;font-size:1em;}
-  #contact h2 .sub{display:block;font-size:0.82em;margin-top:0;}
+  #contact h2 .lead{display:block;margin-bottom:0;font-size:0.98em;line-height:1;}
+  #contact h2 .sub{display:block;font-size:0.82em;margin-top:0;line-height:1;}
   .contact-details{font-size:0.9rem;color:var(--muted);} 
   .contact-details .row{
     display:flex;
@@ -631,7 +631,7 @@
       // block is tall. This keeps the "Let's work together" lines visually
       // closer together while still aligning reasonably with the details box.
       let desiredLineHeight = (targetH / lines);
-      const maxLineHeight = baseLineHeight * 1.15; // allow a small expansion only
+      const maxLineHeight = baseLineHeight * 1.02; // much tighter cap so lines stay close
       if(desiredLineHeight > maxLineHeight) desiredLineHeight = maxLineHeight;
 
       heading.style.lineHeight = desiredLineHeight + 'px';
