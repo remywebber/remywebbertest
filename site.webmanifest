@@ -1,0 +1,13 @@
+{
+  "name": "Remy Webber — Director of Photography",
+  "short_name": "Remy Webber",
+  "description": "Brisbane, Queensland cinematographer and Director of Photography. ARRI Alexa Mini owner-operator working across narrative, documentary, commercial and fashion film.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFEFB",
+  "theme_color": "#151412",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
