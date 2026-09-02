@@ -121,7 +121,7 @@
   footer{
     padding:28px 56px 40px;
     font-size:0.75rem;
-    color:var(--muted);
+    color:#9D7D5C;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -131,7 +131,7 @@
   footer nav{padding-top:0;gap:24px;}
   footer nav a{font-size:0.72rem;display:inline-flex;align-items:center;}
   footer nav a img{width:1em;height:1em;display:block;}
-  footer .service-area{max-width:520px;}
+  footer .service-area{max-width:760px;}
 
   .stills{display:flex;flex-direction:column;align-items:center;gap:6px;}
   .still{
@@ -184,7 +184,7 @@
   .lightbox-frame.fading{opacity:0;}
   .lightbox-caption{width:100%;display:flex;justify-content:space-between;align-items:baseline;color:#F5F2E8;text-align:left;}
   .lightbox-caption h3{font-size:1.1rem;font-weight:600;letter-spacing:0.02em;text-transform:uppercase;}
-  .lightbox-caption p{font-size:0.82rem;color:rgba(245,242,232,0.65);margin-top:4px;}
+  .lightbox-caption p{font-size:0.82rem;color:#9D7D5C;margin-top:4px;}
   .lightbox-nav{display:flex;gap:14px;align-items:center;}
   .lightbox-nav .counter{font-size:0.75rem;color:rgba(245,242,232,0.6);margin-right:6px;}
   .lightbox-nav button{background:none;border:1px solid rgba(245,242,232,0.35);color:#F5F2E8;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;transition:border-color .15s ease, background .15s ease;}
@@ -235,6 +235,7 @@
       <div>
         <h3 id="lbTitle"></h3>
         <p id="lbMeta"></p>
+        <p id="lbCamera"></p>
       </div>
       <div class="lightbox-nav">
         <span class="counter" id="lbCounter"></span>
@@ -252,17 +253,19 @@
      stills 2+ live at images/work/brood/brood-2.png ... brood-11.png.
      "firstStill" overrides the filename of still #1 only (ACS awards
      cinematography naming) — stills 2+ keep the slug-N.png pattern.
+     "camera" is the camera/lens line shown under the director text in
+     the expanded lightbox view.
      "count" is how many numbered stills that project has. */
   const projects = [
-    { title:"Little Pumpkin",       slug:"littlepumpkin",      anchor:"little-pumpkin",             meta:"Dir. Jessica Fisher — Short Film",       count:8,  firstStill:"shortfilm-alexa-mini-lf-tokinavista-ACS-awards-cinematography" },
-    { title:"BROOD",                 slug:"brood",               anchor:"brood",                       meta:"Dir. Sasha Aubort — Fashion Film",       count:11, firstStill:"fashionfilm-alexa-mini-lf-canonv35-ACS-awards-cinematography" },
-    { title:"No Devil Lived On",    slug:"nodevillivedon",     anchor:"no-devil-lived-on",           meta:"Dir. Shuban Krishnar — Short Film",      count:8,  firstStill:"shortfilm-alexa-mini-lf-panavisionprimo-ACS-awards-cinematography" },
-    { title:"Chasing Harvey",       slug:"chasingharvey",      anchor:"chasing-harvey",              meta:"Dir. Jessica Fisher — Short Film",       count:8,  firstStill:"shortfilm-alexa-mini-lf-dzoanamorphic-ACS-awards-cinematography" },
-    { title:"Housemate from Hell",  slug:"housematefromhell",  anchor:"housemate-from-hell",         meta:"Dir. Jessica Fisher — Short Film",       count:10, firstStill:"shortfilm-alexa-mini-lf-dzoarles-ACS-awards-cinematography" },
-    { title:"Travel Money Oz — “Feverdream”", slug:"travelmoneyoz", anchor:"travel-money-oz-feverdream", meta:"Dir. Reilly Vanniekerk — Commercial", count:6, firstStill:"commercial-alexa-mini-lf-tokinavista-ACS-awards-cinematography" },
-    { title:"Solitude",             slug:"solitude",            anchor:"solitude",                    meta:"Dir. Maia Jorgensen — Short Film",       count:9,  firstStill:"shortfilm-alexa-mini-lf-mamiya-ACS-awards-cinematography" },
-    { title:"Mud Man",              slug:"mudman",              anchor:"mud-man",                     meta:"Dir. Madi Lee-Hislop — Dance Film",      count:7,  firstStill:"dancefilm-alexa-mini-lf-sigma-ACS-awards-cinematography" },
-    { title:"Dont Bite",            slug:"dontbite",            anchor:"dont-bite",                   meta:"Dir. Seth Griffiths-Kemp — Visualiser",  count:6,  firstStill:"visualiser-alexa-mini-lf-zeiss-ACS-awards-cinematography" }
+    { title:"Little Pumpkin",       slug:"littlepumpkin",      anchor:"little-pumpkin",             meta:"Dir. Jessica Fisher — Short Film",       count:8,  firstStill:"shortfilm-alexa-mini-lf-tokinavista-ACS-awards-cinematography", camera:'ARRI Alexa Mini LF — Tokina Vista Primes' },
+    { title:"BROOD",                 slug:"brood",               anchor:"brood",                       meta:"Dir. Sasha Aubort — Fashion Film",       count:11, firstStill:"fashionfilm-alexa-mini-lf-canonv35-ACS-awards-cinematography", camera:'ARRI Alexa Mini LF — Canon V35, Mamiya 645, Angenieux Optimo 24-290mm' },
+    { title:"No Devil Lived On",    slug:"nodevillivedon",     anchor:"no-devil-lived-on",           meta:"Dir. Shuban Krishnar — Short Film",      count:8,  firstStill:"shortfilm-alexa-mini-lf-panavisionprimo-ACS-awards-cinematography", camera:'ARRI Alexa Mini — Panavision Primo Noir' },
+    { title:"Chasing Harvey",       slug:"chasingharvey",      anchor:"chasing-harvey",              meta:"Dir. Jessica Fisher — Short Film",       count:8,  firstStill:"shortfilm-alexa-mini-lf-dzoanamorphic-ACS-awards-cinematography", camera:'ARRI Alexa Mini LF — DZO Pavo 2x Anamorphic' },
+    { title:"Housemate from Hell",  slug:"housematefromhell",  anchor:"housemate-from-hell",         meta:"Dir. Jessica Fisher — Short Film",       count:10, firstStill:"shortfilm-alexa-mini-lf-dzoarles-ACS-awards-cinematography", camera:'ARRI Alexa Mini LF — DZO Arles Primes' },
+    { title:"Travel Money Oz — “Feverdream”", slug:"travelmoneyoz", anchor:"travel-money-oz-feverdream", meta:"Dir. Reilly Vanniekerk — Commercial", count:6, firstStill:"commercial-alexa-mini-lf-tokinavista-ACS-awards-cinematography", camera:'ARRI Alexa Mini LF — Tokina Vista Primes' },
+    { title:"Solitude",             slug:"solitude",            anchor:"solitude",                    meta:"Dir. Maia Jorgensen — Short Film",       count:9,  firstStill:"shortfilm-alexa-mini-lf-mamiya-ACS-awards-cinematography", camera:'ARRI Alexa Mini LF — Mamiya 645, Zeiss CP2 Primes' },
+    { title:"Mud Man",              slug:"mudman",              anchor:"mud-man",                     meta:"Dir. Madi Lee-Hislop — Dance Film",      count:7,  firstStill:"dancefilm-alexa-mini-lf-sigma-ACS-awards-cinematography", camera:'ARRI Alexa Mini LF — Canon Sumire Primes' },
+    { title:"Dont Bite",            slug:"dontbite",            anchor:"dont-bite",                   meta:"Dir. Seth Griffiths-Kemp — Visualiser",  count:6,  firstStill:"visualiser-alexa-mini-lf-zeiss-ACS-awards-cinematography", camera:'Sony FX6 — Tokina Vista Primes' }
   ];
 
   function stillUrl(project, n){
@@ -302,6 +305,7 @@
   const lbFrame = document.getElementById('lbFrame');
   const lbTitle = document.getElementById('lbTitle');
   const lbMeta = document.getElementById('lbMeta');
+  const lbCamera = document.getElementById('lbCamera');
   const lbCounter = document.getElementById('lbCounter');
   let projIndex = 0;
   let stillIndex = 0;
@@ -313,6 +317,7 @@
     lbFrame.alt = p.title + ' — ' + p.meta + ', still ' + (stillIndex + 1) + ', cinematography by Remy Webber';
     lbTitle.textContent = p.title;
     lbMeta.textContent = p.meta;
+    lbCamera.textContent = p.camera;
     lbCounter.textContent = (stillIndex + 1) + ' / ' + p.count;
   }
 
@@ -347,7 +352,15 @@
   document.getElementById('lbPrev').addEventListener('click', () => showStill(stillIndex - 1, true));
   document.getElementById('lbNext').addEventListener('click', () => showStill(stillIndex + 1, true));
 
-  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+  // Close on any click outside the still image itself — the caption,
+  // the surrounding padding, and the gaps around the nav buttons are
+  // all "outside", but a click on an actual control (close/prev/next)
+  // still just performs that control's own action.
+  lightbox.addEventListener('click', (e) => {
+    if(e.target === lbFrame) return;
+    if(e.target.closest('button, a')) return;
+    closeLightbox();
+  });
 
   document.addEventListener('keydown', (e) => {
     if(!lightbox.classList.contains('open')) return;
