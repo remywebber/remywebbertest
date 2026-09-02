@@ -34,6 +34,14 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 
+<!-- First-visit default hero image — preloaded so the browser can start
+     fetching it immediately instead of waiting for the hero-rotation
+     script to run and set the <img>'s src. Repeat visitors may end up
+     seeing a different (randomly rotated) image instead, in which case
+     this preload is simply unused — a small tradeoff for a faster first
+     paint on the far more common case of a new visitor's first look. -->
+<link rel="preload" as="image" href="images/hero/hero-1.jpg" fetchpriority="high">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -408,7 +416,7 @@
     <a href="./"><h1>Remy Webber</h1></a>
     <div class="role">Director of Photography</div>
   </div>
-  <nav>
+  <nav aria-label="Main Navigation">
     <a href="work/">Work</a>
     <a href="contact/">Contact</a>
   </nav>
@@ -439,7 +447,7 @@
   <div class="section-head">
     <h2>About</h2>
   </div>
-  <p>Remy Webber is a Brisbane-based cinematographer working across Queensland and Australia. Remy is passionate about storytelling and collaborating on interesting and exciting ideas. Remy shoots narrative, documentary, music video and commercial work, and has won multiple ACS Awards for his work on narrative films.</p>
+  <p>Remy Webber is a Brisbane-based cinematographer working across Queensland and Australia. Remy loves a good story and collaborating on interesting ideas. He shoots narrative, documentary, music video and commercial work, winning multiple ACS Awards for his work on narrative films.</p>
 </section>
 
 <section id="contact">
@@ -600,6 +608,7 @@
   heroCurrentIndex = pickStartIndex();
   heroImgA.src = HERO_IMAGES[heroCurrentIndex].src;
   heroImgA.alt = heroAlt(heroCurrentIndex);
+  heroImgA.fetchPriority = 'high';
   heroImgA.classList.add('is-visible');
 
   // Idle rotation every 5 minutes while the page stays open
@@ -809,8 +818,14 @@
   document.getElementById('lbPrev').addEventListener('click', () => showProject(currentIndex - 1, true));
   document.getElementById('lbNext').addEventListener('click', () => showProject(currentIndex + 1, true));
 
+  // Close on any click outside the still image itself — the caption,
+  // the surrounding padding, and the gaps around the nav buttons are
+  // all "outside", but a click on an actual control (close/prev/next)
+  // still just performs that control's own action.
   lightbox.addEventListener('click', (e) => {
-    if(e.target === lightbox) closeLightbox();
+    if(e.target.closest('.lightbox-frame')) return;
+    if(e.target.closest('button, a')) return;
+    closeLightbox();
   });
 
   document.addEventListener('keydown', (e) => {
