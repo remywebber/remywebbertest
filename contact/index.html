@@ -36,29 +36,36 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ContactPage",
-  "name": "Contact Remy Webber",
-  "url": "https://remywebber.com/contact/",
-  "mainEntity": {
-    "@type": "Person",
-    "@id": "https://remywebber.com/#person",
-    "name": "Remy Webber",
-    "jobTitle": "Director of Photography",
-    "email": "info@remywebber.com",
-    "sameAs": [
-      "https://www.instagram.com/remy_webber/"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Brisbane",
-      "addressRegion": "Queensland",
-      "addressCountry": "AU"
-    },
-    "areaServed": [
-      { "@type": "State", "name": "Queensland" },
-      { "@type": "Country", "name": "Australia" }
-    ]
-  }
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      "@id": "https://remywebber.com/contact/#webpage",
+      "name": "Contact Remy Webber",
+      "url": "https://remywebber.com/contact/",
+      "isPartOf": { "@id": "https://remywebber.com/#website" },
+      "about": { "@id": "https://remywebber.com/#person" },
+      "mainEntity": {
+        "@type": "Person",
+        "@id": "https://remywebber.com/#person",
+        "name": "Remy Webber",
+        "jobTitle": "Director of Photography",
+        "email": "info@remywebber.com",
+        "sameAs": [
+          "https://www.instagram.com/remy_webber/"
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Brisbane",
+          "addressRegion": "Queensland",
+          "addressCountry": "AU"
+        },
+        "areaServed": [
+          { "@type": "State", "name": "Queensland" },
+          { "@type": "Country", "name": "Australia" }
+        ]
+      }
+    }
+  ]
 }
 </script>
 
