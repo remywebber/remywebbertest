@@ -121,7 +121,7 @@
   footer{
     padding:28px 56px 40px;
     font-size:0.75rem;
-    color:#9D7D5C;
+    color:#8D7153;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -160,6 +160,29 @@
   .still .caption .t{font-size:1rem;letter-spacing:0.05em;text-transform:uppercase;}
   .still .caption .m{font-size:0.75rem;color:rgba(245,242,232,0.75);margin-top:4px;}
 
+  /* Reel tile — same 2:1 box as a still, plus a centered play button */
+  .reel-play{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:64px;height:64px;
+    border-radius:50%;
+    background:rgba(21,20,18,0.55);
+    border:1px solid rgba(245,242,232,0.7);
+    transition:background .15s ease, border-color .15s ease;
+    pointer-events:none;
+  }
+  .reel-play::after{
+    content:'';
+    position:absolute;
+    top:50%;left:56%;
+    transform:translate(-50%,-50%);
+    border-style:solid;
+    border-width:11px 0 11px 18px;
+    border-color:transparent transparent transparent #F5F2E8;
+  }
+  .still.reel-still:hover .reel-play{background:rgba(21,20,18,0.75);border-color:#F5F2E8;}
+
   /* Carousel */
   .lightbox{
     position:fixed;inset:0;background:rgba(10,9,7,0.94);
@@ -184,12 +207,26 @@
   .lightbox-frame.fading{opacity:0;}
   .lightbox-caption{width:100%;display:flex;justify-content:space-between;align-items:baseline;color:#F5F2E8;text-align:left;}
   .lightbox-caption h3{font-size:1.1rem;font-weight:600;letter-spacing:0.02em;text-transform:uppercase;}
-  .lightbox-caption p{font-size:0.82rem;color:#9D7D5C;margin-top:4px;}
+  .lightbox-caption p{font-size:0.82rem;color:#8D7153;margin-top:4px;}
   .lightbox-nav{display:flex;gap:14px;align-items:center;}
   .lightbox-nav .counter{font-size:0.75rem;color:rgba(245,242,232,0.6);margin-right:6px;}
   .lightbox-nav button{background:none;border:1px solid rgba(245,242,232,0.35);color:#F5F2E8;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;transition:border-color .15s ease, background .15s ease;}
   .lightbox-nav button:hover{border-color:#F5F2E8;background:rgba(245,242,232,0.08);}
   .lightbox-close{position:absolute;top:32px;right:40px;background:none;border:none;color:#F5F2E8;font-size:1.6rem;cursor:pointer;line-height:1;}
+
+  /* Reel lightbox — same overlay, but a fixed 16:9 video frame instead
+     of a variable-ratio still image, and no prev/next/counter since
+     there's only one video. */
+  .reel-inner{max-width:1200px;}
+  .reel-frame{
+    width:100%;
+    aspect-ratio:16/9;
+    background:#000;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .reel-frame video, .reel-frame iframe{width:100%;height:100%;display:block;border:0;}
+  .reel-title{width:100%;text-align:left;color:#F5F2E8;font-size:1.1rem;font-weight:600;letter-spacing:0.02em;text-transform:uppercase;}
 
   @media(max-width:820px){
     header{padding:28px 24px;}
@@ -246,6 +283,14 @@
   </div>
 </div>
 
+<div class="lightbox" id="reelLightbox">
+  <button class="lightbox-close" id="reelClose" aria-label="Close">&times;</button>
+  <div class="lightbox-inner reel-inner">
+    <div class="reel-frame" id="reelFrame"></div>
+    <h3 class="reel-title">Remy Webber Cinematography Reel</h3>
+  </div>
+</div>
+
 <script>
   /* Single source of truth for every project. "slug" is both the folder
      name and the filename prefix under images/work/ (lowercase, no
@@ -288,17 +333,45 @@
     document.documentElement.style.setProperty('--still-max-width', cappedWidth + 'px');
   }
 
+  /* Your showreel. This is the one thing to point at wherever the video
+     actually ends up living:
+       - Self-hosted on GitHub (type:"video"): add a /videos folder at
+         the repo root, upload the file there, and set videoSrc to its
+         path, e.g. "videos/reel.mp4".
+       - YouTube (type:"youtube", recommended — see chat for why): set
+         youtubeId to the id from the video's URL — the part after
+         "v=", e.g. youtube.com/watch?v=XXXXXXXXXXX → "XXXXXXXXXXX".
+         Uploading as "Unlisted" keeps it out of YouTube's own search
+         and your channel page while still working perfectly embedded
+         here.
+     "poster" is the thumbnail shown on the tile before it's clicked. */
+  const REEL = {
+    title: "Remy Webber Cinematography Reel",
+    poster: "../images/reel-poster.jpg",
+    type: "youtube",
+    videoSrc: "../videos/reel.mp4",
+    youtubeId: "2qPa_q6u3os"
+  };
+
   function buildGrid(){
     const container = document.getElementById('stillsList');
-    container.innerHTML = projects.map((p, i) => `
+    const reelHtml = `
+      <button class="still reel-still" id="reel-cta" type="button">
+        <img class="ph" src="${REEL.poster}" alt="${REEL.title} — watch the showreel" loading="eager">
+        <span class="reel-play" aria-hidden="true"></span>
+        <div class="caption"><div class="t">${REEL.title}</div></div>
+      </button>`;
+    const stillsHtml = projects.map((p, i) => `
       <button class="still" id="${p.anchor}" data-project="${i}">
         <img class="ph" src="${stillUrl(p, 1)}" alt="${p.title} — ${p.meta}, cinematography by Remy Webber" loading="${i === 0 ? 'eager' : 'lazy'}">
         <div class="caption"><div class="t">${p.title}</div><div class="m">${p.meta}</div></div>
       </button>
     `).join('');
-    container.querySelectorAll('.still').forEach(el => {
+    container.innerHTML = reelHtml + stillsHtml;
+    container.querySelectorAll('.still[data-project]').forEach(el => {
       el.addEventListener('click', () => openLightbox(parseInt(el.dataset.project, 10)));
     });
+    document.getElementById('reel-cta').addEventListener('click', openReel);
   }
 
   const lightbox = document.getElementById('lightbox');
@@ -348,6 +421,37 @@
     if(lastFocused) lastFocused.focus();
   }
 
+  const reelLightbox = document.getElementById('reelLightbox');
+  const reelFrame = document.getElementById('reelFrame');
+  let reelLastFocused = null;
+
+  function openReel(){
+    reelLastFocused = document.activeElement;
+    if(REEL.type === 'youtube' && REEL.youtubeId){
+      reelFrame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + REEL.youtubeId + '?rel=0" title="' + REEL.title + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    } else {
+      reelFrame.innerHTML = '<video src="' + REEL.videoSrc + '" controls playsinline preload="metadata"></video>';
+    }
+    reelLightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('reelClose').focus();
+  }
+
+  function closeReel(){
+    reelLightbox.classList.remove('open');
+    reelFrame.innerHTML = ''; // stop playback once closed
+    document.body.style.overflow = '';
+    if(reelLastFocused) reelLastFocused.focus();
+  }
+
+  document.getElementById('reelClose').addEventListener('click', closeReel);
+
+  reelLightbox.addEventListener('click', (e) => {
+    if(e.target.closest('.reel-frame')) return;
+    if(e.target.closest('button, a')) return;
+    closeReel();
+  });
+
   document.getElementById('lbClose').addEventListener('click', closeLightbox);
   document.getElementById('lbPrev').addEventListener('click', () => showStill(stillIndex - 1, true));
   document.getElementById('lbNext').addEventListener('click', () => showStill(stillIndex + 1, true));
@@ -363,10 +467,13 @@
   });
 
   document.addEventListener('keydown', (e) => {
-    if(!lightbox.classList.contains('open')) return;
-    if(e.key === 'Escape') closeLightbox();
-    if(e.key === 'ArrowLeft') showStill(stillIndex - 1, true);
-    if(e.key === 'ArrowRight') showStill(stillIndex + 1, true);
+    if(lightbox.classList.contains('open')){
+      if(e.key === 'Escape') closeLightbox();
+      if(e.key === 'ArrowLeft') showStill(stillIndex - 1, true);
+      if(e.key === 'ArrowRight') showStill(stillIndex + 1, true);
+    } else if(reelLightbox.classList.contains('open')){
+      if(e.key === 'Escape') closeReel();
+    }
   });
 
   setStillCap();
