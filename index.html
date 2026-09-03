@@ -245,14 +245,30 @@
     font-size:0.82rem;
     letter-spacing:0.08em;
     text-transform:uppercase;
-    color:#9D7D5C;
+    color:#8D7153;
   }
   .section-head span{font-size:0.78rem;color:var(--muted);} 
+
+  .work-more{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:20px;
+  }
+  .work-more a{
+    font-size:0.82rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#8D7153;
+    padding-bottom:4px;
+    border-bottom:1px solid transparent;
+    transition:border-color .15s ease;
+  }
+  .work-more a:hover{border-color:#8D7153;}
 
   .grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:4px;
+    gap:8px;
   }
   .grid .tile{
     position:relative;
@@ -295,7 +311,7 @@
     line-height:1.35;
   }
   /* reduce spacing between the two lines and make both slightly smaller */
-  #contact h2 .lead{display:block;margin-bottom:0;font-size:0.98em;line-height:1;color:#9D7D5C;}
+  #contact h2 .lead{display:block;margin-bottom:0;font-size:0.98em;line-height:1;color:#8D7153;}
   #contact h2 .sub{display:block;font-size:0.82em;margin-top:0;line-height:1;}
   .contact-details{font-size:0.9rem;color:var(--muted);} 
   .contact-details .row{
@@ -305,7 +321,7 @@
     border-bottom:1px solid var(--line);
   }
   .contact-details .row > :first-child{color:var(--ink);font-weight:500;}
-  .contact-details .row > :last-child{color:#9D7D5C;}
+  .contact-details .row > :last-child{color:#8D7153;}
   .contact-details .row .ig-label{display:inline-flex;align-items:center;gap:8px;}
   .contact-details .row .ig-label img{width:1em;height:1em;display:block;}
   .contact-details .row a{border-bottom:1px solid transparent;} 
@@ -314,7 +330,7 @@
   footer{
     padding:28px 56px 40px;
     font-size:0.75rem;
-    color:#9D7D5C;
+    color:#8D7153;
     display:flex;
     justify-content:center;
   }
@@ -430,9 +446,6 @@
 </div>
 
 <section id="work">
-  <div class="section-head">
-    <h2>Selected Work</h2>
-  </div>
   <div class="grid" id="workGrid">
     <button class="tile" id="little-pumpkin" data-index="0"><img src="images/selected/littlepumpkin.jpg" alt="Little Pumpkin — short film directed by Jessica Fisher, cinematography by Remy Webber"></button>
     <button class="tile" id="brood" data-index="1"><img src="images/selected/brood.jpg" alt="BROOD — fashion film directed by Sasha Aubort, cinematography by Remy Webber"></button>
@@ -440,6 +453,9 @@
     <button class="tile" id="chasing-harvey" data-index="3"><img src="images/selected/chasingharvey.jpg" alt="Chasing Harvey — short film directed by Jessica Fisher, cinematography by Remy Webber"></button>
     <button class="tile" id="housemate-from-hell" data-index="4"><img src="images/selected/housematefromhell.jpg" alt="Housemate from Hell — short film directed by Jessica Fisher, cinematography by Remy Webber"></button>
     <button class="tile" id="mud-man" data-index="5"><img src="images/selected/mudman.jpg" alt="Mud Man — dance film directed by Madi Lee-Hislop, cinematography by Remy Webber"></button>
+  </div>
+  <div class="work-more">
+    <a href="work/">More work...</a>
   </div>
 </section>
 
