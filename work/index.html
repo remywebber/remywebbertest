@@ -34,6 +34,13 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 
+<!-- The reel tile and Little Pumpkin's thumbnail are the first two
+     things visible on load — preloaded so the browser starts fetching
+     them immediately instead of waiting for the grid-building script
+     to run and set each <img>'s src. -->
+<link rel="preload" as="image" href="../images/reel-poster.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="/images/work/littlepumpkin/shortfilm-alexa-mini-lf-tokinavista-ACS-awards-cinematography.png" fetchpriority="high">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -357,13 +364,13 @@
     const container = document.getElementById('stillsList');
     const reelHtml = `
       <button class="still reel-still" id="reel-cta" type="button">
-        <img class="ph" src="${REEL.poster}" alt="${REEL.title} — watch the showreel" loading="eager">
+        <img class="ph" src="${REEL.poster}" alt="${REEL.title} — watch the showreel" loading="eager" fetchpriority="high">
         <span class="reel-play" aria-hidden="true"></span>
         <div class="caption"><div class="t">${REEL.title}</div></div>
       </button>`;
     const stillsHtml = projects.map((p, i) => `
       <button class="still" id="${p.anchor}" data-project="${i}">
-        <img class="ph" src="${stillUrl(p, 1)}" alt="${p.title} — ${p.meta}, cinematography by Remy Webber" loading="${i === 0 ? 'eager' : 'lazy'}">
+        <img class="ph" src="${stillUrl(p, 1)}" alt="${p.title} — ${p.meta}, cinematography by Remy Webber" loading="${i === 0 ? 'eager' : 'lazy'}"${i === 0 ? ' fetchpriority="high"' : ''}>
         <div class="caption"><div class="t">${p.title}</div><div class="m">${p.meta}</div></div>
       </button>
     `).join('');
